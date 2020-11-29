@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "snowy",
+  "version": "${version}",
+
+  "name": "Snowy",
+  "description": "Makes it snow in all biomes",
+  "authors": [
+    "marcus8448"
+  ],
+  "contact": {
+    "homepage": "https://marcus8448.github.io/",
+    "sources": "https://github.com/marcus8448/snowy"
+  },
+
+  "license": "LGPLv3",
+  "icon": "assets/snowy/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.marcus8448.mods.snowy.SnowyMod"
+    ]
+  },
+  "accessWidener" : "snowy.accesswidener",
+  "mixins": [
+    "snowy.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.9.0",
+    "fabric-game-rule-api-v1": "*",
+    "minecraft": ">=1.16.2"
+  }
+}
