@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BiomeAccessor",
-    "BiomeArrayMixin",
+    "ChunkDataS2CPacketMixin",
     "ServerWorldMixin",
     "SnowPlacementMixin"
   ],

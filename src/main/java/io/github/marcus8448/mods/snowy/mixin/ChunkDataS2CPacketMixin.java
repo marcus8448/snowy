@@ -18,16 +18,21 @@
 package io.github.marcus8448.mods.snowy.mixin;
 
 import io.github.marcus8448.mods.snowy.SnowyMod;
-import net.minecraft.util.collection.IndexedIterable;
+import net.minecraft.network.packet.s2c.play.ChunkDataS2CPacket;
 import net.minecraft.world.biome.source.BiomeArray;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(BiomeArray.class)
-public class BiomeArrayMixin {
-    @Redirect(method = "toIntArray", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/collection/IndexedIterable;getRawId(Ljava/lang/Object;)I"))
-    private <T> int offsetBiome(IndexedIterable indexedIterable, T entry) {
-        return SnowyMod.addition + indexedIterable.getRawId(entry);
+@Mixin(ChunkDataS2CPacket.class)
+public class ChunkDataS2CPacketMixin {
+    @SuppressWarnings("UnnecessaryQualifiedMemberReference")
+    @Redirect(method = "Lnet/minecraft/network/packet/s2c/play/ChunkDataS2CPacket;<init>(Lnet/minecraft/world/chunk/WorldChunk;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/source/BiomeArray;toIntArray()[I"))
+    private int[] offsetBiomes(BiomeArray biomeArray) {
+        int[] ints = biomeArray.toIntArray();
+        for (int i = 0; i < ints.length; i++) {
+            ints[i] = ints[i] + SnowyMod.addition;
+        }
+        return ints;
     }
 }

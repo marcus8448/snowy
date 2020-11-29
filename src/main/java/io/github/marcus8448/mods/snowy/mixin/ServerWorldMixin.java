@@ -23,11 +23,13 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.biome.Biome;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -41,9 +43,11 @@ import java.util.function.BooleanSupplier;
 public abstract class ServerWorldMixin {
     @Shadow public abstract void setWeather(int clearDuration, int rainDuration, boolean raining, boolean thundering);
 
+    @Shadow @Final private MinecraftServer server;
+
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;isRaining()Z"))
     private void weather(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
-        if (SnowyMod.snowAlways) {
+        if (server.getGameRules().getBoolean(SnowyMod.snowAlways)) {
             setWeather(0, 200, true, false);
         }
     }

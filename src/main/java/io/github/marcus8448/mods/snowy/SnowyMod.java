@@ -33,8 +33,7 @@ import java.util.List;
 
 public class SnowyMod implements ModInitializer {
 	public static int addition = Integer.MAX_VALUE;
-	public static boolean snowAlways = false;
-
+	public static GameRules.Key<GameRules.BooleanRule> snowAlways = null;
 	@Override
 	public void onInitialize() {
 		BuiltinBiomes.PLAINS.getTemperature();
@@ -53,8 +52,6 @@ public class SnowyMod implements ModInitializer {
 		for (Biome biome : biomes) {
 			BuiltinBiomes.register(BuiltinRegistries.BIOME.getRawId(biome) + addition, RegistryKey.of(Registry.BIOME_KEY, new Identifier(BuiltinRegistries.BIOME.getId(biome).toString() + "_snow")), new Biome.Builder().category(biome.getCategory()).depth(biome.getDepth()).downfall(biome.getDownfall()).effects(biome.getEffects()).generationSettings(biome.getGenerationSettings()).precipitation(biome.getPrecipitation() == Biome.Precipitation.RAIN ? Biome.Precipitation.SNOW : biome.getPrecipitation()).scale(biome.getScale()).spawnSettings(biome.getSpawnSettings()).temperature(biome.getPrecipitation() == Biome.Precipitation.RAIN ? -1.0f : biome.getTemperature()).temperatureModifier(((BiomeAccessor) biome).getWeather().temperatureModifier).build());
 		}
-		GameRuleRegistry.register("snowAlways", GameRules.Category.MISC, GameRules.BooleanRule.create(false, (minecraftServer, booleanRule) -> {
-			snowAlways = booleanRule.get();
-		}));
+		snowAlways = GameRuleRegistry.register("snowAlways", GameRules.Category.MISC, GameRules.BooleanRule.create(false, (minecraftServer, booleanRule) -> {}));
 	}
 }
