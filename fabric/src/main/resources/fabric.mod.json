@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_author}"
+  ],
+  "icon": "${mod_id}.png",
+  "license": "${mod_license}",
+  "entrypoints": {
+    "main": [
+      "dev.mlow.mods.snowy.SnowyFabric"
+    ],
+    "modmenu": [
+      "dev.mlow.mods.snowy.compat.ModMenuIntegration"
+    ]
+  },
+  "depends": {
+    "fabric-api-base": "*",
+    "fabric-biome-api-v1": "*",
+    "fabric-lifecycle-events-v1": "*",
+    "fabricloader": ">=${min_fabric_loader}",
+    "minecraft": ">=${min_minecraft}"
+  }
+}

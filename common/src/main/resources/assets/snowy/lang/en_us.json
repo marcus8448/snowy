@@ -1,0 +1,19 @@
+{
+  "title.snowy.config": "Snowy",
+  "category.snowy.general": "General",
+
+  "option.snowy.enable_non_overworld_biomes": "Enable non-overworld biomes",
+  "option.snowy.enable_non_overworld_biomes.tooltip": "Make biomes that do not spawn on the overworld (e.g. Nether and End) snowy",
+
+  "option.snowy.force_disabled_biomes": "Force disabled biomes",
+  "option.snowy.force_disabled_biomes.tooltip": "Exclude these biomes from changes",
+
+  "option.snowy.force_enabled_biomes": "Force enabled biomes",
+  "option.snowy.force_enabled_biomes.tooltip": "Make these biomes snowy, even if they do not meet criteria",
+
+  "option.snowy.enable_temperature_noise": "Enable temperature noise",
+  "option.snowy.enable_temperature_noise.tooltip": "Enables biome temperature noise",
+
+  "option.snowy.enable_constant_snow": "Enable constant snow",
+  "option.snowy.enable_constant_snow.tooltip": "Forces the world to be constantly snowing"
+}

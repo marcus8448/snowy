@@ -1,0 +1,4 @@
+{
+  "type": "snowy:freeze_biome",
+  "feature": "minecraft:freeze_top_layer"
+}
