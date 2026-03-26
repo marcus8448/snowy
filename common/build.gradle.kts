@@ -3,7 +3,7 @@ val minecraft = project.property("minecraft.version").toString()
 val fabricLoader = project.property("fabric.loader.version").toString()
 
 plugins {
-    id("fabric-loom")
+    id("net.fabricmc.fabric-loom")
 }
 
 loom {
@@ -22,8 +22,7 @@ loom {
 
 dependencies {
     minecraft("com.mojang:minecraft:$minecraft")
-    mappings(loom.officialMojangMappings())
 
     // loom expects some loader classes to exist, provides mixin and mixin-extras too
-    modCompileOnly("net.fabricmc:fabric-loader:${fabricLoader}")
+    compileOnly("net.fabricmc:fabric-loader:${fabricLoader}")
 }

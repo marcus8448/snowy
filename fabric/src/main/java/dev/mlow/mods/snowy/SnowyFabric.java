@@ -1,6 +1,6 @@
 /*
  * Snowy
- * Copyright (C) 2019-2025 marcus8448
+ * Copyright (C) 2020-2026 marcus8448
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -27,8 +27,7 @@ import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -50,28 +49,26 @@ public class SnowyFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        BiomeModifications.create(ResourceLocation.fromNamespaceAndPath(Constant.MOD_ID, "freeze_surface")).add(ModificationPhase.ADDITIONS, biome -> canModify(biome) && !biome.hasPlacedFeature(MiscOverworldPlacements.FREEZE_TOP_LAYER), context -> {
+        BiomeModifications.create(Identifier.fromNamespaceAndPath(Constant.MOD_ID, "freeze_surface")).add(ModificationPhase.ADDITIONS, biome -> canModify(biome) && !biome.hasPlacedFeature(MiscOverworldPlacements.FREEZE_TOP_LAYER), context -> {
             context.getGenerationSettings().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, MiscOverworldPlacements.FREEZE_TOP_LAYER);
         });
 
-        BiomeModifications.create(ResourceLocation.fromNamespaceAndPath(Constant.MOD_ID, "change_weather")).add(ModificationPhase.POST_PROCESSING, SnowyFabric::canModify, context -> {
+        BiomeModifications.create(Identifier.fromNamespaceAndPath(Constant.MOD_ID, "change_weather")).add(ModificationPhase.POST_PROCESSING, SnowyFabric::canModify, context -> {
             context.getWeather().setTemperature(0.0f);
             context.getWeather().setPrecipitation(true);
             context.getWeather().setDownfall(0.5f);
             context.getWeather().setTemperatureModifier(CONFIG.enableTemperatureNoise() ? Biome.TemperatureModifier.FROZEN : Biome.TemperatureModifier.NONE);
         });
 
-        ServerTickEvents.START_WORLD_TICK.register(level -> {
+        ServerTickEvents.START_SERVER_TICK.register(level -> {
             if (CONFIG.enableConstantSnow()) {
-                if (CONFIG.enableNonOverworldBiomes() || level.dimension().equals(Level.OVERWORLD)) {
-                    level.setWeatherParameters(0, 6000, true, false);
-                }
+                level.setWeatherParameters(0, 6000, true, false);
             }
         });
     }
 
     private static boolean canModify(@NotNull BiomeSelectionContext biome) {
-        String id = biome.getBiomeKey().location().toString();
+        String id = biome.getBiomeKey().identifier().toString();
         if (CONFIG.forceEnabledBiomes().contains(id)) return true;
         if (CONFIG.forceDisabledBiomes().contains(id)) return false;
 

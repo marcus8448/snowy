@@ -15,9 +15,9 @@ val curseforgeId = (project.property("mod.curseforge.id") ?: "").toString()
 val modrinthId = (project.property("mod.modrinth.id") ?: "").toString()
 
 plugins {
-    id("fabric-loom")
-    id("com.modrinth.minotaur") version("2.8.7")
-    id("net.darkhax.curseforgegradle") version("1.1.26")
+    id("net.fabricmc.fabric-loom")
+    id("com.modrinth.minotaur")
+    id("net.darkhax.curseforgegradle")
 }
 
 loom {
@@ -30,10 +30,6 @@ loom {
     interfaceInjection.enableDependencyInterfaceInjection.set(false)
     interfaceInjection.getIsEnabled().set(false)
     enableTransitiveAccessWideners.set(false)
-
-//    mixin {
-//        defaultRefmapName.set("gamemodeoverhaul.refmap.json")
-//    }
 
     runs {
         named("client") {
@@ -75,20 +71,19 @@ repositories {
 
 dependencies {
     minecraft("com.mojang:minecraft:$minecraft")
-    mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:$fabricLoader")
-    compileOnly(project(":common", "namedElements"))
+    implementation("net.fabricmc:fabric-loader:$fabricLoader")
+    compileOnly(project(":common"))
 
     fabricModules.forEach {
-        modImplementation(fabricApi.module(it, fabricAPI))
+        implementation(fabricApi.module(it, fabricAPI))
     }
-    modImplementation("com.terraformersmc:modmenu:${modmenu}") { isTransitive = false }
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${clothConfig}") {
-        exclude(group = "net.fabricmc")
-        exclude(group = "net.fabricmc.fabric-api")
-    }
+    implementation("com.terraformersmc:modmenu:${modmenu}") { isTransitive = false }
+//    implementation("me.shedaniel.cloth:cloth-config-fabric:${clothConfig}") {
+//        exclude(group = "net.fabricmc")
+//        exclude(group = "net.fabricmc.fabric-api")
+//    }
 
-    modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:$fabricAPI")
+    runtimeOnly("net.fabricmc.fabric-api:fabric-api:$fabricAPI")
 }
 
 tasks.compileJava {

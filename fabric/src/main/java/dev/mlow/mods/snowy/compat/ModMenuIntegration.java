@@ -1,6 +1,6 @@
 /*
  * Snowy
- * Copyright (C) 2019-2025 marcus8448
+ * Copyright (C) 2020-2026 marcus8448
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by

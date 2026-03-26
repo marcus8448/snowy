@@ -6,8 +6,6 @@ val minecraft = project.property("minecraft.version").toString()
 val modName = project.property("mod.name").toString()
 val modVersion = project.property("mod.version").toString()
 val neoforge = project.property("neoforge.version").toString()
-val parchmentMc = project.property("parchment.mc").toString()
-val parchmentVersion = project.property("parchment.version").toString()
 val curseforgeId = (project.property("mod.curseforge.id") ?: "").toString()
 val modrinthId = (project.property("mod.modrinth.id") ?: "").toString()
 
@@ -16,19 +14,14 @@ plugins {
     `maven-publish`
     idea
     id("net.neoforged.moddev")
-    id("com.modrinth.minotaur") version("2.8.7")
-    id("net.darkhax.curseforgegradle") version("1.1.26")
+    id("com.modrinth.minotaur")
+    id("net.darkhax.curseforgegradle")
 }
 
 neoForge {
     // Specify the version of NeoForge to use.
     version = neoforge
 
-    parchment {
-        minecraftVersion = parchmentMc
-        mappingsVersion = parchmentVersion
-    }
-    
     runs {
         register("client") {
             client()
@@ -61,7 +54,7 @@ neoForge {
 }
 
 dependencies {
-    compileOnly(project(":common", "namedElements"))
+    compileOnly(project(":common"))
 }
 
 tasks.compileJava {
@@ -70,15 +63,6 @@ tasks.compileJava {
 
 tasks.processResources {
     from(project(":common").sourceSets.main.get().resources)
-
-//    // remove refmap on neoforge
-//    doLast {
-//        file(outputs.files.asFileTree.first { it.name.equals("snowy.mixins.json") }.apply {
-//            val parse = groovy.json.JsonSlurper().parse(this)!! as MutableMap<*, *>
-//            parse.remove("refmap")
-//            writeText(groovy.json.JsonOutput.toJson(parse))
-//        })
-//    }
 }
 
 tasks.javadoc {
@@ -87,7 +71,7 @@ tasks.javadoc {
 
 tasks.register<TaskPublishCurseForge>("curseforge") {
     apiToken = System.getenv("CURSEFORGE_TOKEN").toString()
-    val mainFile = upload(curseforgeId, tasks.findByName("remapJar") ?: tasks.getByName("jar"))
+    val mainFile = upload(curseforgeId, tasks.getByName("jar"))
     mainFile.addGameVersion(project.name)
     mainFile.addGameVersion(minecraft)
     mainFile.displayName = "$modName $modVersion (${project.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }} ${minecraft})"
@@ -102,7 +86,7 @@ tasks.register<TaskPublishCurseForge>("curseforge") {
 extensions.configure<ModrinthExtension> {
     token.set(System.getenv("MODRINTH_TOKEN"))
     projectId.set(modrinthId)
-    uploadFile.set(tasks.findByName("remapJar") ?: tasks.getByName("jar"))
+    uploadFile.set(tasks.getByName("jar"))
     versionNumber.set("${modVersion}+${minecraft}-${project.name}")
     versionName.set("$modName v${modVersion} (${project.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }} ${minecraft})")
     versionType.set("release")

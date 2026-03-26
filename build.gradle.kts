@@ -10,11 +10,11 @@ val modAuthor = project.property("mod.author").toString()
 val modLicense = project.property("mod.license").toString()
 
 plugins {
-    id("fabric-loom") version("1.10-SNAPSHOT") apply(false)
-    id("net.neoforged.moddev") version("2.0.95") apply(false)
+    id("net.fabricmc.fabric-loom") version("1.15-SNAPSHOT") apply(false)
+    id("net.neoforged.moddev") version("2.0.141") apply(false)
     id("com.diffplug.spotless") version("7.0.4") apply(false)
-    id("com.modrinth.minotaur") version("2.8.7") apply(false)
-    id("net.darkhax.curseforgegradle") version("1.1.26") apply(false)
+    id("com.modrinth.minotaur") version("2.9.0") apply(false)
+    id("net.darkhax.curseforgegradle") version("1.2.30") apply(false)
 }
 
 group = "dev.mlow.mods"
@@ -35,8 +35,8 @@ subprojects {
     }
 
     extensions.configure<JavaPluginExtension> {
-        targetCompatibility = JavaVersion.VERSION_21
-        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_25
+        sourceCompatibility = JavaVersion.VERSION_25
     }
 
     tasks.withType<ProcessResources> {
@@ -74,7 +74,7 @@ subprojects {
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
-        options.release.set(21)
+        options.release.set(25)
     }
 
     tasks.withType<Jar> {
@@ -115,20 +115,20 @@ subprojects {
                     }
 
                     scm {
-                        url.set("https://github.com/marcus8448/GamemodeOverhaul")
-                        connection.set("scm:git:git://github.com/marcus8448/GamemodeOverhaul.git")
-                        developerConnection.set("scm:git:git@github.com:marcus8448/GamemodeOverhaul.git")
+                        url.set("https://github.com/marcus8448/Snowy")
+                        connection.set("scm:git:git://github.com/marcus8448/Snowy.git")
+                        developerConnection.set("scm:git:git@github.com:marcus8448/Snowy.git")
                     }
 
                     issueManagement {
                         system.set("github")
-                        url.set("https://github.com/marcus8448/GamemodeOverhaul/issues")
+                        url.set("https://github.com/marcus8448/Snowy/issues")
                     }
 
                     licenses {
                         license {
                             name.set(modLicense)
-                            url.set("https://github.com/marcus8448/GamemodeOverhaul/blob/main/LICENSE")
+                            url.set("https://github.com/marcus8448/Snowy/blob/main/LICENSE")
                         }
                     }
                 }

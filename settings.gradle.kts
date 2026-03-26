@@ -5,8 +5,7 @@ pluginManagement {
         maven("https://maven.fabricmc.net") {
             name = "Fabric"
             content {
-                includeGroup("fabric-loom")
-                includeGroup("net.fabricmc")
+                includeGroupAndSubgroups("net.fabricmc")
             }
         }
         maven("https://maven.neoforged.net/releases") {

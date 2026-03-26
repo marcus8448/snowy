@@ -1,6 +1,6 @@
 /*
  * Snowy
- * Copyright (C) 2019-2025 marcus8448
+ * Copyright (C) 2020-2026 marcus8448
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,10 +20,8 @@ package dev.mlow.mods.snowy;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -35,7 +33,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
-import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -59,22 +57,18 @@ public class SnowyNeoForge {
         BIOME_MODIFIERS.register(modEventBus);
     }
 
-    public void serverTick(LevelTickEvent.Pre event) {
-        if (event.getLevel() instanceof ServerLevel level) {
-            if (CONFIG.enableConstantSnow()) {
-                if (CONFIG.enableNonOverworldBiomes() || level.dimension().equals(Level.OVERWORLD)) {
-                    level.setWeatherParameters(0, 6000, true, false);
-                }
-            }
+    public void serverTick(ServerTickEvent.Pre event) {
+        if (CONFIG.enableConstantSnow()) {
+            event.getServer().setWeatherParameters(0, 6000, true, false);
         }
     }
 
     private static boolean canModify(Holder<Biome> biome) {
         for (String forceEnabledBiome : CONFIG.forceEnabledBiomes()) {
-            if (biome.is(ResourceLocation.parse(forceEnabledBiome))) return true;
+            if (biome.is(Identifier.parse(forceEnabledBiome))) return true;
         }
         for (String forceDisabledBiome : CONFIG.forceDisabledBiomes()) {
-            if (biome.is(ResourceLocation.parse(forceDisabledBiome))) return false;
+            if (biome.is(Identifier.parse(forceDisabledBiome))) return false;
         }
 
         return CONFIG.enableNonOverworldBiomes() || biome.is(BiomeTags.IS_OVERWORLD);
