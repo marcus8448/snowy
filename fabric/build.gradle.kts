@@ -78,10 +78,10 @@ dependencies {
         implementation(fabricApi.module(it, fabricAPI))
     }
     implementation("com.terraformersmc:modmenu:${modmenu}") { isTransitive = false }
-//    implementation("me.shedaniel.cloth:cloth-config-fabric:${clothConfig}") {
-//        exclude(group = "net.fabricmc")
-//        exclude(group = "net.fabricmc.fabric-api")
-//    }
+    implementation("me.shedaniel.cloth:cloth-config-fabric:${clothConfig}") {
+        exclude(group = "net.fabricmc")
+        exclude(group = "net.fabricmc.fabric-api")
+    }
 
     runtimeOnly("net.fabricmc.fabric-api:fabric-api:$fabricAPI")
 }

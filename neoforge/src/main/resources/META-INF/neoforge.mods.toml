@@ -23,6 +23,6 @@ ${mod_description}
 [[dependencies.${mod_id}]]
     modId="minecraft"
     mandatory=true
-    versionRange="[${min_minecraft},)"
+    versionRange="${target_minecraft}"
     ordering="NONE"
     side="BOTH"

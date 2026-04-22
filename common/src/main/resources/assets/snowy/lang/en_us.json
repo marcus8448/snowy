@@ -1,6 +1,7 @@
 {
   "title.snowy.config": "Snowy",
   "category.snowy.general": "General",
+  "snowy.configuration.general": "General",
 
   "option.snowy.enable_non_overworld_biomes": "Enable non-overworld biomes",
   "option.snowy.enable_non_overworld_biomes.tooltip": "Make biomes that do not spawn on the overworld (e.g. Nether and End) snowy",

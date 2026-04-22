@@ -15,18 +15,18 @@
  * along with this program. If not, see https://www.gnu.org/licenses/.
  */
 
-package dev.mlow.mods.snowy.compat;
+package dev.mlow.mods.snowy.client;
 
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import com.terraformersmc.modmenu.api.ModMenuApi;
-import net.fabricmc.loader.api.FabricLoader;
+import dev.mlow.mods.snowy.Constant;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-public class ModMenuIntegration implements ModMenuApi {
-    @Override
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        if (FabricLoader.getInstance().isModLoaded("cloth-config")) {
-            return ClothConfigScreen::createScreenFactory;
-        }
-        return _ -> null;
+@Mod(value = Constant.MOD_ID, dist = Dist.CLIENT)
+public class SnowyClientNeoForge {
+    public SnowyClientNeoForge(ModContainer container) {
+        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 }

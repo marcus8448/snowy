@@ -10,7 +10,7 @@ val modAuthor = project.property("mod.author").toString()
 val modLicense = project.property("mod.license").toString()
 
 plugins {
-    id("net.fabricmc.fabric-loom") version("1.15-SNAPSHOT") apply(false)
+    id("net.fabricmc.fabric-loom") version("1.16-SNAPSHOT") apply(false)
     id("net.neoforged.moddev") version("2.0.141") apply(false)
     id("com.diffplug.spotless") version("7.0.4") apply(false)
     id("com.modrinth.minotaur") version("2.9.0") apply(false)
@@ -47,7 +47,7 @@ subprojects {
             "mod_license" to modLicense,
             "mod_author" to modAuthor,
             "mod_version" to project.version,
-            "min_minecraft" to project.property("minecraft.version.min"),
+            "target_minecraft" to project.property("minecraft.version.target"),
             "min_fabric_loader" to project.property("fabric.loader.version.min"),
             "min_neoforge" to project.property("neoforge.version.min"),
             "min_fml" to project.property("fml.version.min"),
